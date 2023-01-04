@@ -4,6 +4,8 @@ from typing import List, Optional, Tuple, Union, Type
 
 import tldr
 from argparse import ArgumentParser
+import os
+import json
 
 class TLDRPage(object):
 
@@ -12,7 +14,7 @@ class TLDRPage(object):
         self.content = content
 
     @staticmethod
-    def get_page(name: str) -> Type['TLDRPage']:
+    def get_page(name: str) -> 'TLDRPage':
         return TLDRPage(name, tldr.get_page(name))
 
     @staticmethod
@@ -29,6 +31,26 @@ class TLDRPage(object):
             description = description + line + "\n" 
         return description.rstrip()
 
+class FileOrFolderPage(object):
+
+    pages = None
+    with open("./fspages.json") as pages_file:
+        pages = json.load(pages_file)
+
+    def __init__(self, path):
+        self.path = path
+
+    @staticmethod
+    def is_path(path):
+        return os.path.exists(path)
+
+    @staticmethod
+    def get_page(path) -> Type['FileOrFolderPage']:
+        return FileOrFolderPage(path)
+
+    def description(self, detailed = False) -> str:
+        return FileOrFolderPage.pages.get(self.path, "no page found")
+
 def create_parser() -> ArgumentParser:
     parser = ArgumentParser(prog="wat")
     parser.add_argument(
@@ -44,7 +66,9 @@ def parse_arguments() -> List[str]:
     return arguments.name_of_this
 
 def lookup_description(name: str) -> str:
-    if TLDRPage.has_page(name):
+    if FileOrFolderPage.is_path(name):
+        return FileOrFolderPage.get_page(name).description()
+    elif TLDRPage.has_page(name):
         return TLDRPage.get_page(name).description()
     else:
         return "no description found"
