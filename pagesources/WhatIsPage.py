@@ -1,0 +1,30 @@
+from typing import List, Optional, Tuple, Union, Type
+from .AbstractPage import AbstractPage
+import subprocess
+
+class WhatIsPage(AbstractPage):
+    """`whatis` makes use of the man page infrastructure of the OS.
+    This also covers the output of `apropos`, `info`, and `man`."""
+
+    def __init__(self, name, content: str):
+        self.page_name = name
+        self.content = content
+
+    def description(self, detailed = False) -> str:
+        return self.content
+
+    @classmethod
+    def run_whatis(cls, name: str):
+        return subprocess.run(["whatis", name], capture_output=True)
+
+    @classmethod
+    def has_page(cls, name: str) -> bool:
+        process = cls.run_whatis(name)
+        return process.returncode == 0
+
+    @classmethod
+    def get_page(cls, name: str) -> 'WhatIsPage':
+        process = cls.run_whatis(name)
+        description = process.stdout.decode('utf-8')
+        description = description.split(" - ")[1].strip()
+        return cls(name, description)
