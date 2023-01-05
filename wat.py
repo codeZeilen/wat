@@ -6,6 +6,58 @@ import tldr
 from argparse import ArgumentParser
 import os
 import json
+import subprocess
+
+class WhatIsHelpPage(object):
+    """`whatis` makes use of the man page infrastructure of the OS.
+    This also covers the output of `apropos`, `info`, and `man`."""
+
+    def __init__(self, name, content: str):
+        self.page_name = name
+        self.content = content
+
+    def description(self, detailed = False) -> str:
+        return self.content
+
+    @staticmethod
+    def run_whatis(name: str):
+        return subprocess.run(["whatis", name], capture_output=True)
+
+    @staticmethod
+    def has_page(name: str) -> bool:
+        process = WhatIsHelpPage.run_whatis(name)
+        return process.returncode == 0
+
+    @staticmethod
+    def get_page(name: str) -> 'WhatIsHelpPage':
+        process = WhatIsHelpPage.run_whatis(name)
+        description = process.stdout.decode('utf-8')
+        description = description.split(" - ")[1].strip()
+        return WhatIsHelpPage(name, description)
+
+class OSHelpPage(object):
+    """`help` documents the built-in commands of bash"""
+
+    def __init__(self, name, content: str):
+        self.page_name = name
+        self.content = content
+
+    def description(self, detailed = False) -> str:
+        return self.content
+
+    @staticmethod
+    def run_help(name: str):
+        return subprocess.run(["/bin/bash", "-c", '"help -d {name}"'.format(name=name)], capture_output=True)
+        
+    @staticmethod
+    def has_page(name: str) -> bool:
+        process = OSHelpPage.run_help(name)
+        return process.returncode == 0
+
+    @staticmethod
+    def get_page(name: str) -> 'OSHelpPage':
+        process = OSHelpPage.run_help(name)
+        return OSHelpPage(name, str(process.stdout))
 
 class TLDRPage(object):
 
@@ -65,11 +117,15 @@ def parse_arguments() -> List[str]:
         parser.print_help() 
     return arguments.name_of_this
 
-def lookup_description(name: str) -> str:
+def lookup_page(name: str) -> str:
     if FileOrFolderPage.is_path(name):
-        return FileOrFolderPage.get_page(name).description()
+        return FileOrFolderPage.get_page(name)
+    elif WhatIsHelpPage.has_page(name):
+        return WhatIsHelpPage.get_page(name)
+    elif OSHelpPage.has_page(name):
+        return OSHelpPage.get_page(name)
     elif TLDRPage.has_page(name):
-        return TLDRPage.get_page(name).description()
+        return TLDRPage.get_page(name)
     else:
         return "no description found"
 
@@ -77,10 +133,10 @@ def print_description(description: str) -> None:
     print(description)
 
 def answer_wat():
-    requested_names = parse_arguments() 
+    requested_names = parse_arguments()
     for name in requested_names:
-        description = lookup_description(name)
-        print_description(name + ": " + description)
+        page = lookup_page(name)
+        print_description(name + ": " + page.description())
 
 if __name__ == "__main__":
     answer_wat()
