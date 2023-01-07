@@ -1,4 +1,4 @@
-from AbstractPage import AbstractPage
+from .AbstractPage import AbstractPage
 
 class NoPage(AbstractPage):
 
