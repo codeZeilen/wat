@@ -4,7 +4,7 @@ from typing import List
 
 from argparse import ArgumentParser
 
-from pagesources import NoPage, AbstractPage, BashHelpPage, FSPathPage, TLDRPage, WhatIsPage
+from .pagesources import NoPage, AbstractPage, BashHelpPage, FSPathPage, TLDRPage, WhatIsPage
 from . import __version__
 
 def create_parser() -> ArgumentParser:
