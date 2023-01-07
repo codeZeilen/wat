@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from typing import List, Optional, Tuple, Union, Type
+from typing import List
 
 from argparse import ArgumentParser
 
@@ -27,12 +27,12 @@ def parse_arguments() -> List[str]:
 def lookup_page(name: str) -> 'AbstractPage':
     if FSPathPage.is_path(name):
         return FSPathPage.get_page(name)
-    elif WhatIsPage.has_page(name):
-        return WhatIsPage.get_page(name)
     elif BashHelpPage.has_page(name):
         return BashHelpPage.get_page(name)
     elif TLDRPage.has_page(name):
         return TLDRPage.get_page(name)
+    elif WhatIsPage.has_page(name):
+        return WhatIsPage.get_page(name)
     else:
         return NoPage()
 
