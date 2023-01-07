@@ -1,12 +1,11 @@
-from typing import List, Optional, Tuple, Union, Type
+from typing import List, Optional, Tuple, Union, Type, Dict
 from .AbstractPage import AbstractPage
 import json, os
 
 class FSPathPage(AbstractPage):
 
-    pages = None
     with open("./fspages.json") as pages_file:
-        pages = json.load(pages_file)
+        pages: Dict[str,str] = json.load(pages_file)
 
     def __init__(self, path):
         self.path = path
@@ -14,6 +13,10 @@ class FSPathPage(AbstractPage):
     @classmethod
     def is_path(cls, path):
         return os.path.exists(path)
+
+    @classmethod
+    def has_page(cls, path) -> bool:
+        return cls.is_path(path) and path in cls.pages
 
     @classmethod
     def get_page(cls, path) -> 'FSPathPage':
