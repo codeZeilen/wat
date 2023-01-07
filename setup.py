@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 with open('README.md') as f:
     readme = f.read()
 
-with open('LICENSE') as f:
+with open('LICENSE.md') as f:
     license = f.read()
 
 setup(
@@ -31,7 +31,7 @@ setup(
     python_requires='>=3.10',
     entry_points={
         'console_scripts': [
-            'wat = wat:answer_wat',
+            'wat = wat.wat:answer_wat',
         ],
     },
     packages=find_packages(exclude=('tests', 'docs'))

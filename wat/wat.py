@@ -5,12 +5,16 @@ from typing import List, Optional, Tuple, Union, Type
 from argparse import ArgumentParser
 
 from pagesources import NoPage, AbstractPage, BashHelpPage, FSPathPage, TLDRPage, WhatIsPage
+from . import __version__
 
 def create_parser() -> ArgumentParser:
     parser = ArgumentParser(prog="wat")
+    
     parser.add_argument(
         'name_of_this', type=str, nargs='*', help="name of the thing to lookup", metavar='nameOfThis'
     )
+    parser.add_argument('--version', action='version', version=__version__)
+    
     return parser
 
 def parse_arguments() -> List[str]:
@@ -40,6 +44,3 @@ def answer_wat():
     for name in requested_names:
         page = lookup_page(name)
         print_description(name + ": " + page.description())
-
-if __name__ == "__main__":
-    answer_wat()
