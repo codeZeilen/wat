@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from pathlib import Path
+sys.path.insert(0, Path(__file__).parent.parent.as_posix())
 
-import sample
+import wat.wat as wat
