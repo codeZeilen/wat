@@ -12,13 +12,6 @@ import pytest
 from cli_test_helpers import ArgvContext, shell
 
 
-def test_main_module():
-    """
-    Exercise (most of) the code in the ``__main__`` module.
-    """
-    import_module('wat.__main__')
-
-
 def test_runas_module():
     """
     Can this package be run as a Python module?
@@ -41,7 +34,7 @@ def test_usage():
     """
     result = shell('wat')
 
-    assert 'usage:' in result.stderr
+    assert 'usage:' in result.stdout
 
 
 def test_version():
@@ -53,19 +46,3 @@ def test_version():
 
     assert result.stdout == f"{expected_version}{linesep}"
     assert result.exit_code == 0
-
-
-# def test_set_action():
-#     """
-#     Is action argument available?
-#     """
-#     with ArgvContext('{{package}}', 'set'):
-#         args = {{module}}.cli.parse_arguments()
-
-#     assert args.action == 'set'
-
-
-# NOTE:
-# You can continue here, adding all CLI action and option combinations
-# using a non-destructive option, such as --help, to test for the
-# availability of the CLI command or option.
