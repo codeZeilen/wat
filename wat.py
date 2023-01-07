@@ -4,7 +4,7 @@ from typing import List, Optional, Tuple, Union, Type
 
 from argparse import ArgumentParser
 
-from pagesources import BashHelpPage, FSPathPage, TLDRPage, WhatIsPage
+from pagesources import NoPage, AbstractPage, BashHelpPage, FSPathPage, TLDRPage, WhatIsPage
 
 def create_parser() -> ArgumentParser:
     parser = ArgumentParser(prog="wat")
@@ -20,7 +20,7 @@ def parse_arguments() -> List[str]:
         parser.print_help() 
     return arguments.name_of_this
 
-def lookup_page(name: str) -> str:
+def lookup_page(name: str) -> 'AbstractPage':
     if FSPathPage.is_path(name):
         return FSPathPage.get_page(name)
     elif WhatIsPage.has_page(name):
@@ -30,7 +30,7 @@ def lookup_page(name: str) -> str:
     elif TLDRPage.has_page(name):
         return TLDRPage.get_page(name)
     else:
-        return "no description found"
+        return NoPage()
 
 def print_description(description: str) -> None:
     print(description)

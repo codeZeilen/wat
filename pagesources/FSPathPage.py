@@ -16,7 +16,7 @@ class FSPathPage(AbstractPage):
         return os.path.exists(path)
 
     @classmethod
-    def get_page(cls, path) -> Type['FSPathPage']:
+    def get_page(cls, path) -> 'FSPathPage':
         return cls(path)
 
     def description(self, detailed = False) -> str:
