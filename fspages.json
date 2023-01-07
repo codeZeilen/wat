@@ -5,7 +5,7 @@
     "/dev": "/dev contains all device files, which are not regular files but instead refer to various hardware devices on the system, including hard drives.",
     "/etc": "/etc contains system-global configuration files, which affect the system's behavior for all users.",
     "/home": "/home sweet home, this is the place for users' home directories.",
-    "/lib": "/lib contains very important dynamic libraries and kernel modules",
+    "/lib": "/lib contains important dynamic libraries and kernel modules",
     "/media": "/media is intended as a mount point for external devices, such as hard drives or removable media (floppies, CDs, DVDs).",
     "/mnt": "/mnt is also a place for mount points, but dedicated specifically to \"temporarily mounted\" devices, such as network filesystems.",
     "/opt": "/opt can be used to store additional software for your system, which is not handled by the package manager.",
