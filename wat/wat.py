@@ -4,18 +4,21 @@ from typing import List
 
 from argparse import ArgumentParser
 
-from .pagesources import NoPage, AbstractPage, BashHelpPage, FSPathPage, TLDRPage, WhatIsPage
+from .pagesources import NoPage, AbstractPage, BashHelpPage, FSPathPage, \
+    TLDRPage, WhatIsPage
 from . import __version__
+
 
 def create_parser() -> ArgumentParser:
     parser = ArgumentParser(prog="wat")
-    
+   
     parser.add_argument(
         'name_of_this', type=str, nargs='*', help="name of the thing to lookup", metavar='nameOfThis'
     )
     parser.add_argument('--version', action='version', version=__version__)
-    
+
     return parser
+
 
 def parse_arguments() -> List[str]:
     parser = create_parser()
@@ -23,6 +26,7 @@ def parse_arguments() -> List[str]:
     if not arguments.name_of_this:
         parser.print_help() 
     return arguments.name_of_this
+
 
 def lookup_page(name: str) -> 'AbstractPage':
     if FSPathPage.is_path(name):
@@ -36,8 +40,10 @@ def lookup_page(name: str) -> 'AbstractPage':
     else:
         return NoPage()
 
+
 def print_description(description: str) -> None:
     print(description)
+
 
 def answer_wat():
     requested_names = parse_arguments()

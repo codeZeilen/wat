@@ -2,14 +2,10 @@
 Tests for command line interface (CLI)
 Based on https://github.com/painless-software/python-cli-test-helpers/tree/main/examples/argparse/tests
 """
-from importlib import import_module
 from importlib.metadata import version
 from os import linesep
-from unittest.mock import patch
 
-import pytest
-
-from cli_test_helpers import ArgvContext, shell
+from cli_test_helpers import shell
 
 
 def test_bash_built_in_page():
@@ -19,12 +15,14 @@ def test_bash_built_in_page():
     result = shell('wat echo')
     assert 'echo: Print given arguments.' in result.stdout
 
+
 def test_fs_page():
     """
     Does it produce the correct page for a bash builtin?
     """
     result = shell('wat /lib')
     assert "/lib contains important dynamic libraries and kernel modules" in result.stdout
+
 
 def test_tldr_page():
     """
@@ -33,12 +31,14 @@ def test_tldr_page():
     result = shell('wat cut')
     assert "Cut out fields from `stdin` or files." in result.stdout
 
+
 def test_no_page():
     """
     Does it produce the correct page for a tldr page?
     """
     result = shell('wat no_such_page')
     assert "no description found" in result.stdout
+
 
 def test_runas_module():
     """
