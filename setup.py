@@ -1,25 +1,39 @@
 # -*- coding: utf-8 -*-
-
-# Learn more: https://github.com/kennethreitz/setup.py
+# Based on: https://github.com/kennethreitz/setup.py
 
 from setuptools import setup, find_packages
 
-
-with open('README.rst') as f:
+with open('README.md') as f:
     readme = f.read()
 
 with open('LICENSE') as f:
     license = f.read()
 
 setup(
-    name='sample',
+    name='wat',
     version='0.1.0',
-    description='Sample package for Python-Guide.org',
+    description='',
     long_description=readme,
-    author='Kenneth Reitz',
-    author_email='me@kennethreitz.com',
-    url='https://github.com/kennethreitz/samplemod',
+    author='Patrick Rein',
+    author_email='hi@patrickrein.de',
+    url='https://github.com/codezeilen/wat',
     license=license,
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Environment :: Console',
+        'Intended Audience :: System Administrators',
+        'Intended Audience :: Developers',
+        'Topic :: System :: Shells',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 3.10',
+        'Operating System :: POSIX :: Linux'
+    ],
+    python_requires='>=3.10',
+    entry_points={
+        'console_scripts': [
+            'wat = wat:answer_wat',
+        ],
+    },
     packages=find_packages(exclude=('tests', 'docs'))
 )
 
