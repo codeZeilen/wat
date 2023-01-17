@@ -4,3 +4,4 @@ from .FSPathPage import FSPathPage
 from .WhatIsPage import WhatIsPage
 from .AbstractPage import AbstractPage
 from .NoPage import NoPage
+from .SystemCtlPage import SystemCtlPage

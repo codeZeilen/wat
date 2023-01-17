@@ -4,8 +4,11 @@ Based on https://github.com/painless-software/python-cli-test-helpers/tree/main/
 """
 from importlib.metadata import version
 from os import linesep
+import pytest
 
 from cli_test_helpers import shell
+
+SYSTEMCTL_AVAILABLE = shell('systemd-sysctl').exit_code == 0
 
 
 def test_bash_built_in_page():
@@ -22,6 +25,24 @@ def test_fs_page():
     """
     result = shell('wat /lib')
     assert "/lib contains important dynamic libraries and kernel modules" in result.stdout
+
+
+@pytest.mark.skipif(not SYSTEMCTL_AVAILABLE, reason="systemctl not available")
+def test_systemctl_page_indirect():
+    """
+    Does it produce the correct page for a service?
+    """
+    result = shell('wat systemd-sysctl')
+    assert "Apply Kernel Variables" in result.stdout
+
+
+@pytest.mark.skipif(not SYSTEMCTL_AVAILABLE, reason="systemctl not available")
+def test_systemctl_page_direct():
+    """
+    Does it produce the correct page for a service with a direct name?
+    """
+    result = shell('wat systemd-sysctl.service')
+    assert "Apply Kernel Variables" in result.stdout
 
 
 def test_tldr_page():

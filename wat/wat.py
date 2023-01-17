@@ -5,13 +5,13 @@ from typing import List
 from argparse import ArgumentParser
 
 from .pagesources import NoPage, AbstractPage, BashHelpPage, FSPathPage, \
-    TLDRPage, WhatIsPage
+    WhatIsPage, TLDRPage, SystemCtlPage
 from . import __version__
 
 
 def create_parser() -> ArgumentParser:
     parser = ArgumentParser(prog="wat")
-   
+ 
     parser.add_argument(
         'name_of_this', type=str, nargs='*', help="name of the thing to lookup", metavar='nameOfThis'
     )
@@ -37,6 +37,8 @@ def lookup_page(name: str) -> 'AbstractPage':
         return TLDRPage.get_page(name)
     elif WhatIsPage.has_page(name):
         return WhatIsPage.get_page(name)
+    elif SystemCtlPage.has_page(name):
+        return SystemCtlPage.get_page(name)
     else:
         return NoPage()
 

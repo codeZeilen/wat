@@ -1,6 +1,6 @@
-from typing import List, Optional, Tuple, Union, Type
 from .AbstractPage import AbstractPage
 import subprocess
+
 
 class WhatIsPage(AbstractPage):
     """`whatis` makes use of the man page infrastructure of the OS.
@@ -10,7 +10,7 @@ class WhatIsPage(AbstractPage):
         self.page_name = name
         self.content = content
 
-    def description(self, detailed = False) -> str:
+    def description(self, detailed=False) -> str:
         return self.content
 
     @classmethod
