@@ -38,7 +38,7 @@ def test_systemctl_page_indirect():
     Does it produce the correct page for a service?
     """
     result = execute_shell_command('wat systemd-sysctl')
-    assert "Apply Kernel Variables" in result.stdout
+    assert "Configure kernel parameters" in result.stdout
 
 
 @pytest.mark.skipif(not SYSTEMCTL_AVAILABLE, reason="systemctl not available")
@@ -47,7 +47,7 @@ def test_systemctl_page_direct():
     Does it produce the correct page for a service with a direct name?
     """
     result = execute_shell_command('wat systemd-sysctl.service')
-    assert "Apply Kernel Variables" in result.stdout
+    assert "Configure kernel parameters" in result.stdout
 
 
 def test_tldr_page():
