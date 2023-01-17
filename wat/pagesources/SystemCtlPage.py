@@ -1,6 +1,10 @@
 from .AbstractPage import AbstractPage
 import subprocess
 
+SYSTEMCTL_AVAILABLE = subprocess.run("systemctl --version",
+                                     capture_output=True,
+                                     shell=True).returncode == 0
+
 
 class SystemCtlPage(AbstractPage):
     """systemctl has descriptions for running services"""
@@ -23,8 +27,11 @@ class SystemCtlPage(AbstractPage):
 
     @classmethod
     def has_page(cls, name: str) -> bool:
-        return cls.run_systemctl(name).returncode == 0 and \
-            cls.run_systemctl(name + ".service").returncode == 0
+        if not SYSTEMCTL_AVAILABLE:
+            return False
+        else:
+            return cls.run_systemctl(name).returncode == 0 and \
+                cls.run_systemctl(name + ".service").returncode == 0
 
     @classmethod
     def process_successfully_returned(cls, process:

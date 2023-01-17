@@ -8,7 +8,7 @@ import pytest
 
 from cli_test_helpers import shell
 
-SYSTEMCTL_AVAILABLE = shell('systemd-sysctl').exit_code == 0
+SYSTEMCTL_AVAILABLE = shell('systemctl').exit_code == 0
 
 
 def test_bash_built_in_page():
