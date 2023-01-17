@@ -30,8 +30,10 @@ class SystemCtlPage(AbstractPage):
         if not SYSTEMCTL_AVAILABLE:
             return False
         else:
-            return cls.run_systemctl(name).returncode == 0 and \
-                cls.run_systemctl(name + ".service").returncode == 0
+            plain = cls.run_systemctl(name)
+            with_service_ending = cls.run_systemctl(name + ".service")
+            return cls.process_successfully_returned(plain) \
+                    or cls.process_successfully_returned(with_service_ending)
 
     @classmethod
     def process_successfully_returned(cls, process:
