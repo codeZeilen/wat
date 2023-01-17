@@ -19,7 +19,7 @@ class SystemCtlPage(AbstractPage):
     @classmethod
     def extract_description(cls, systemctl_output: bytes) -> str:
         string_output = systemctl_output.decode('utf-8')
-        return string_output.strip().split(" ", 5)[5:][0]
+        return string_output.strip().split(" ", 4)[4:][0]
 
     @classmethod
     def has_page(cls, name: str) -> bool:
