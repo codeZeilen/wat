@@ -14,8 +14,8 @@ class SystemCtlPage(AbstractPage):
 
     @classmethod
     def run_systemctl(cls, name: str):
-        return subprocess.run(["/bin/systemctl", "-c", '"systemctl list-units --all --no-legend {name}"'.format(name=name)], capture_output=True)
-
+        return subprocess.run("systemctl list-units --all --no-legend {name}".format(name=name), capture_output=True, shell=True)
+            
     @classmethod
     def extract_description(cls, systemctl_output: str) -> str:
         return systemctl_output.strip().split(" ", 4)[4:][0]
@@ -26,14 +26,19 @@ class SystemCtlPage(AbstractPage):
             cls.run_systemctl(name + ".service").returncode == 0
 
     @classmethod
+    def process_successfully_returned(cls, process:
+            'subprocess.CompletedProcess') -> bool:
+        return process.returncode == 0 and process.stdout != ""
+
+    @classmethod
     def get_page(cls, name: str) -> 'SystemCtlPage':
         process = cls.run_systemctl(name)
-        if process.returncode == 0:
+        if cls.process_successfully_returned(process):
             return cls(name,
                        cls.extract_description(str(process.stdout)))
 
         process = cls.run_systemctl(name + ".service")
-        if process.returncode == 0:
+        if cls.process_successfully_returned(process):
             return cls(name + ".service",
                        cls.extract_description(str(process.stdout)))
 
