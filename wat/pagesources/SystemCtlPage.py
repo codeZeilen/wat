@@ -17,8 +17,9 @@ class SystemCtlPage(AbstractPage):
         return subprocess.run("systemctl list-units --all --no-legend {name}".format(name=name), capture_output=True, shell=True)
             
     @classmethod
-    def extract_description(cls, systemctl_output: str) -> str:
-        return systemctl_output.strip().split(" ", 4)[4:][0]
+    def extract_description(cls, systemctl_output: bytes) -> str:
+        string_output = systemctl_output.decode('utf-8')
+        return string_output.strip().split(" ", 5)[5:][0]
 
     @classmethod
     def has_page(cls, name: str) -> bool:
@@ -28,18 +29,18 @@ class SystemCtlPage(AbstractPage):
     @classmethod
     def process_successfully_returned(cls, process:
             'subprocess.CompletedProcess') -> bool:
-        return process.returncode == 0 and process.stdout != ""
+        return process.returncode == 0 and len(process.stdout) > 0
 
     @classmethod
     def get_page(cls, name: str) -> 'SystemCtlPage':
         process = cls.run_systemctl(name)
         if cls.process_successfully_returned(process):
             return cls(name,
-                       cls.extract_description(str(process.stdout)))
+                       cls.extract_description(process.stdout))
 
         process = cls.run_systemctl(name + ".service")
         if cls.process_successfully_returned(process):
             return cls(name + ".service",
-                       cls.extract_description(str(process.stdout)))
+                       cls.extract_description(process.stdout))
 
         raise NameError(name)
