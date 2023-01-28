@@ -25,4 +25,4 @@ class FSPathPage(AbstractPage):
         return cls(path)
 
     def description(self, detailed=False) -> str:
-        return FSPathPage.pages.get(self.path, "no page found")
+        return FSPathPage.all_pages().get(self.path, "no page found")
