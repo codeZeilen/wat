@@ -16,6 +16,14 @@ def execute_shell_command(command):
         return shell(command)
 
 
+def test_global_config_file_page():
+    """
+    Does it produce the correct page for a global config file?
+    """
+    result = execute_shell_command('cd /etc; wat sudoers')
+    assert 'sudoers: This is the configuration file that determines how running commands with superuser privileges (sudo) works.' in result.stdout
+
+
 def test_bash_built_in_page():
     """
     Does it produce the correct page for a bash builtin?
