@@ -30,7 +30,7 @@ def parse_arguments() -> List[str]:
 
 
 def lookup_page(name: str) -> 'AbstractPage':
-    if FSPathPage.is_path(name):
+    if FSPathPage.has_page(name):
         return FSPathPage.get_page(name)
     elif BashHelpPage.has_page(name):
         return BashHelpPage.get_page(name)

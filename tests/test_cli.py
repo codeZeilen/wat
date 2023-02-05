@@ -20,8 +20,10 @@ def test_global_config_file_page():
     """
     Does it produce the correct page for a global config file?
     """
-    result = execute_shell_command('cd /etc; wat sudoers')
-    assert 'sudoers: This is the configuration file that determines how running commands with superuser privileges (sudo) works.' in result.stdout
+    result = execute_shell_command('wat /etc/sudoers')
+    assert not result.stderr
+    assert result.exit_code == 0
+    assert 'sudoers: The sudoers file contains a list of users' in result.stdout
 
 
 def test_bash_built_in_page():

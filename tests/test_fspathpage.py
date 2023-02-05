@@ -1,6 +1,5 @@
 import os
 from pyfakefs.fake_filesystem_unittest import Patcher
-import pathlib
 
 from wat.pagesources import FSPathPage
 
@@ -31,7 +30,7 @@ def test_has_page_for_local_path():
 
 
 def test_has_page_for_local_path_in_variable_dir():
-    FSPathPage.has_page("/bin") # To initialize the pages cache
+    FSPathPage.has_page("/bin")  # To initialize the pages cache
     with Patcher() as patcher:
         patcher.fs.create_file("/home/someUser/.bashrc", contents="test")
         os.chdir('/home/someUser')
