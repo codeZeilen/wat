@@ -13,7 +13,8 @@ def create_parser() -> ArgumentParser:
     parser = ArgumentParser(prog="wat")
  
     parser.add_argument(
-        'name_of_this', type=str, nargs='*', help="name of the thing to lookup", metavar='nameOfThis'
+        'name_of_this', type=str, nargs='*', 
+        help="name of the thing to lookup", metavar='nameOfThis'
     )
     parser.add_argument('--version', action='version', version=__version__)
 
@@ -24,7 +25,7 @@ def parse_arguments() -> List[str]:
     parser = create_parser()
     arguments = parser.parse_args()
     if not arguments.name_of_this:
-        parser.print_help() 
+        parser.print_help()
     return arguments.name_of_this
 
 
