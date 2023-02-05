@@ -1,5 +1,5 @@
 {   
-    "__license": "Originally created contributors to the Ubuntu documentation wiki. Based on https://help.ubuntu.com/community/LinuxFilesystemTreeOverview.",
+    "__license": "- Root directory descriptions originally created contributors to the Ubuntu documentation wiki and based on https://help.ubuntu.com/community/LinuxFilesystemTreeOverview.\n- /etc/hosts and /etc/sudoers descriptions based on the corresponding Wikipedia entries (hosts, sudo)",
     "/bin": "/bin is a place for most commonly used terminal commands, like ls, mount, rm, etc.",
     "/boot": "/boot contains files needed to start up the system, including the Linux kernel, a RAM disk image and bootloader configuration files.",
     "/dev": "/dev contains all device files, which are not regular files but instead refer to various hardware devices on the system, including hard drives.",
@@ -17,5 +17,8 @@
     "/sys": "/sys is a virtual filesystem that can be accessed to set or obtain information about the kernel's view of the system.",
     "/tmp": "/tmp is a place for temporary files used by applications.",
     "/usr": "/usr contains the majority of user utilities and applications, and partly replicates the root directory structure, containing for instance, among others, /usr/bin/ and /usr/lib.",
-    "/var": "/var is dedicated to variable data, such as logs, databases, websites, and temporary spool (e-mail etc.) files that persist from one boot to the next. A notable directory it contains is /var/log where system log files are kept. "
+    "/var": "/var is dedicated to variable data, such as logs, databases, websites, and temporary spool (e-mail etc.) files that persist from one boot to the next. A notable directory it contains is /var/log where system log files are kept. ",
+
+    "/etc/hosts": "The computer file hosts is an operating system file that maps hostnames to IP addresses.",
+    "/etc/sudoers": "The sudoers file contains a list of users or user groups with permission to execute a subset of commands while having the privileges of the root user or another specified user."
 }
