@@ -34,6 +34,7 @@ setup(
             'wat = wat.wat:answer_wat',
         ],
     },
-    packages=find_packages(exclude=('tests', 'docs'))
+    include_package_data=True,
+    package_data={"": ["*.json"]},
+    packages=['wat', 'wat.pagesources']
 )
-

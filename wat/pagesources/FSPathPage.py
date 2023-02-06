@@ -1,38 +1,61 @@
 from typing import Dict
 from .AbstractPage import AbstractPage
 import json
-import os
 import pathlib
+import pkgutil
 
 
 class FSPathPage(AbstractPage):
 
     pages = {}
-    pages_file_path = pathlib.Path(__file__).parent / ".." / ".." / "fspages.json"
+    pages_file_path = "fspages.json"
 
-    def __init__(self, path):
-        self.path = pathlib.Path(self.path).absolute()
+    def __init__(self, path_object: pathlib.Path, page_content: str = ""):
+        self.path = path_object
+        self.page_content = page_content
 
     @classmethod
-    def is_path(cls, path):
-        return os.path.exists(path)
+    def content_from_pattern(cls, path) -> str:
+        for pattern in cls.all_pages()["patterns"]:
+            if path.match(pattern):
+                return cls.all_pages()["patterns"][pattern]
+        return ""
 
     @classmethod
     def has_page(cls, path) -> bool:
-        absolute_path = pathlib.Path(path).absolute().as_posix()
-        return cls.is_path(absolute_path) and absolute_path in cls.all_pages()
+        try:
+            cls.get_page(path)
+            return True
+        except KeyError:
+            return False
 
     @classmethod
     def get_page(cls, path) -> 'FSPathPage':
-        return cls(path)
+        absolute_path = pathlib.Path(path).absolute()
+        page_content = None
+        if absolute_path.exists():
+            page_content = cls.all_pages()["absolute_paths"].get(absolute_path.as_posix(), None)
+            if page_content:
+                return cls(absolute_path, page_content)
+            
+            page_content = cls.all_pages()["individual_files"].get(absolute_path.name, None)
+            if page_content:
+                return cls(absolute_path, page_content)
+
+            page_content = cls.content_from_pattern(absolute_path)
+            if page_content:
+                return cls(absolute_path, page_content)
+        raise KeyError("No page found for path: {}".format(path))
 
     @classmethod
-    def all_pages(cls) -> Dict[str, str]:
+    def initialize_pages(cls) -> None:
+        cls.pages = json.loads(pkgutil.get_data(__name__, cls.pages_file_path))
+
+    @classmethod
+    def all_pages(cls) -> Dict[str, Dict[str, str]]:
         if not cls.pages:
-            with open(cls.pages_file_path) as pages_file:
-                cls.pages = json.load(pages_file)
+            cls.initialize_pages()
         return cls.pages
 
     def description(self, detailed=False) -> str:
-        return FSPathPage.all_pages().get(self.path.as_posix(),
-            "no page found")
+        return self.page_content
