@@ -61,3 +61,16 @@ def test_get_page_for_relative_path_in_variable_dir():
         page = FSPathPage.get_page(".bashrc")
         assert page.path.as_posix() == "/home/someUser/.bashrc"
         assert not page.description() == "no page found"
+
+
+#
+# Page Type
+#
+
+def test_page_type_for_file():
+    os.chdir('/etc')
+    assert FSPathPage.get_page("hosts").page_type() == "file"
+
+
+def test_page_type_for_directory():
+    assert FSPathPage.get_page("/etc").page_type() == "directory"

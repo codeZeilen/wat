@@ -34,22 +34,22 @@ def lookup_page(name: str) -> 'AbstractPage':
         return FSPathPage.get_page(name)
     elif BashHelpPage.has_page(name):
         return BashHelpPage.get_page(name)
+    elif SystemCtlPage.has_page(name):
+        return SystemCtlPage.get_page(name)
     elif TLDRPage.has_page(name):
         return TLDRPage.get_page(name)
     elif WhatIsPage.has_page(name):
         return WhatIsPage.get_page(name)
-    elif SystemCtlPage.has_page(name):
-        return SystemCtlPage.get_page(name)
     else:
         return NoPage()
 
 
-def print_description(description: str) -> None:
-    print(description)
+def print_description(page: AbstractPage) -> None:
+    print("{0} ({1}): {2}".format(page.page_name(), page.page_type(), page.description()))
 
 
 def answer_wat():
     requested_names = parse_arguments()
     for name in requested_names:
         page = lookup_page(name)
-        print_description(name + ": " + page.description())
+        print_description(page)

@@ -59,3 +59,9 @@ class FSPathPage(AbstractPage):
 
     def description(self, detailed=False) -> str:
         return self.page_content
+
+    def page_type(self) -> str:
+        return "directory" if self.path.is_dir() else "file"
+
+    def page_name(self) -> str:
+        return self.path.as_posix()

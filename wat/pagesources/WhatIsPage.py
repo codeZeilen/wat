@@ -7,11 +7,8 @@ class WhatIsPage(AbstractPage):
     This also covers the output of `apropos`, `info`, and `man`."""
 
     def __init__(self, name, content: str):
-        self.page_name = name
+        self.name = name
         self.content = content
-
-    def description(self, detailed=False) -> str:
-        return self.content
 
     @classmethod
     def run_whatis(cls, name: str):
@@ -28,3 +25,9 @@ class WhatIsPage(AbstractPage):
         description = process.stdout.decode('utf-8')
         description = description.split(" - ")[1].strip()
         return cls(name, description)
+
+    def description(self, detailed=False) -> str:
+        return self.content
+
+    def page_type(self) -> str:
+        return "program"

@@ -1,4 +1,3 @@
-from typing import List
 from .AbstractPage import AbstractPage
 import subprocess
 
@@ -7,15 +6,12 @@ class BashHelpPage(AbstractPage):
     """`help` documents the built-in commands of bash"""
 
     def __init__(self, name, content: str):
-        self.page_name = name
+        self.name = name
         self.content = content
-
-    def description(self, detailed = False) -> str:
-        return self.content
 
     @classmethod
     def run_help(cls, name: str):
-        return subprocess.run(["/bin/bash", "-c", '"help -d {name}"'.format(name=name)], capture_output=True)
+        return subprocess.run(["/bin/bash", "-c", 'help -d {name}'.format(name=name)], capture_output=True)
 
     @classmethod
     def has_page(cls, name: str) -> bool:
@@ -26,3 +22,9 @@ class BashHelpPage(AbstractPage):
     def get_page(cls, name: str) -> 'BashHelpPage':
         process = cls.run_help(name)
         return cls(name, str(process.stdout))
+
+    def description(self, detailed = False) -> str:
+        return self.content
+
+    def page_type(self) -> str:
+        return "builtin"

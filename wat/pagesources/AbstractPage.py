@@ -3,6 +3,9 @@ from abc import abstractmethod
 
 class AbstractPage(object):
 
+    def __init__(self) -> None:
+        self.name: str = ""
+
     @classmethod
     @abstractmethod
     def has_page(cls, name: str) -> bool:
@@ -16,3 +19,11 @@ class AbstractPage(object):
     @abstractmethod
     def description(self) -> str:
         pass
+
+    @abstractmethod
+    def page_type(self) -> str:
+        pass
+
+    @abstractmethod
+    def page_name(self) -> str:
+        return self.name

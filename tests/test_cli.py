@@ -23,7 +23,8 @@ def test_global_config_file_page():
     result = execute_shell_command('wat /etc/sudoers')
     assert not result.stderr
     assert result.exit_code == 0
-    assert 'sudoers: The sudoers file contains a list of users' in result.stdout
+    assert 'The sudoers file contains a list of users' in result.stdout
+    assert 'sudoers (file)' in result.stdout
 
 
 def test_bash_built_in_page():
@@ -31,7 +32,8 @@ def test_bash_built_in_page():
     Does it produce the correct page for a bash builtin?
     """
     result = execute_shell_command('wat echo')
-    assert 'echo: Print given arguments.' in result.stdout
+    assert 'Write arguments to the standard output.' in result.stdout
+    assert 'echo (builtin)' in result.stdout
 
 
 def test_fs_page():
@@ -40,6 +42,7 @@ def test_fs_page():
     """
     result = execute_shell_command('wat /lib')
     assert "/lib contains important dynamic libraries and kernel modules" in result.stdout
+    assert "/lib (directory)" in result.stdout
 
 
 @pytest.mark.skipif(not SYSTEMCTL_AVAILABLE, reason="systemctl not available")
@@ -48,7 +51,8 @@ def test_systemctl_page_indirect():
     Does it produce the correct page for a service?
     """
     result = execute_shell_command('wat systemd-sysctl')
-    assert "Configure kernel parameters" in result.stdout
+    assert "Apply Kernel Variables" in result.stdout
+    assert "systemd-sysctl (service)" in result.stdout
 
 
 @pytest.mark.skipif(not SYSTEMCTL_AVAILABLE, reason="systemctl not available")
@@ -57,7 +61,8 @@ def test_systemctl_page_direct():
     Does it produce the correct page for a service with a direct name?
     """
     result = execute_shell_command('wat systemd-sysctl.service')
-    assert "Configure kernel parameters" in result.stdout
+    assert "Apply Kernel Variables" in result.stdout
+    assert "systemd-sysctl (service)" in result.stdout
 
 
 def test_tldr_page():
@@ -66,6 +71,7 @@ def test_tldr_page():
     """
     result = execute_shell_command('wat cut')
     assert "Cut out fields from `stdin` or files." in result.stdout
+    assert "cut (program)" in result.stdout
 
 
 def test_no_page():

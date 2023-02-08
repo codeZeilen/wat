@@ -8,7 +8,7 @@ import tldr
 class TLDRPage(AbstractPage):
 
     def __init__(self, name, content: str):
-        self.page_name = name
+        self.name = name
         self.content = content
 
     @classmethod
@@ -31,3 +31,6 @@ class TLDRPage(AbstractPage):
                 line = line[1:].lstrip()
             description = description + line + "\n"
         return description.rstrip()
+
+    def page_type(self) -> str:
+        return "program"

@@ -10,11 +10,8 @@ class SystemCtlPage(AbstractPage):
     """systemctl has descriptions for running services"""
 
     def __init__(self, name, content: str):
-        self.page_name = name
+        self.name = name
         self.content = content
-
-    def description(self, detailed=False) -> str:
-        return self.content
 
     @classmethod
     def run_systemctl(cls, name: str):
@@ -53,3 +50,16 @@ class SystemCtlPage(AbstractPage):
                        cls.extract_description(process.stdout))
 
         raise NameError(name)
+
+    def description(self, detailed=False) -> str:
+        return self.content
+
+    def page_type(self) -> str:
+        return "service"
+
+    def page_name(self) -> str:
+        full_name = super().page_name()
+        if full_name.endswith(".service"):
+            return full_name[:-8]
+        else:
+            return full_name
