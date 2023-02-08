@@ -22,8 +22,7 @@ class AbstractPage(object):
 
     @abstractmethod
     def page_type(self) -> str:
-        pass
+        return ""
 
-    @abstractmethod
     def page_name(self) -> str:
         return self.name

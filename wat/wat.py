@@ -46,7 +46,7 @@ def lookup_page(name: str) -> 'AbstractPage':
     if TLDRPage.has_page(name):
         result_pages.append(TLDRPage.get_page(name))
     
-    result_page = NoPage()
+    result_page = NoPage(name)
     if len(result_pages) > 1:
         # We use the most specific type with the most extensive description
         if result_pages[0].page_type() == result_pages[-1].page_type():
@@ -60,7 +60,11 @@ def lookup_page(name: str) -> 'AbstractPage':
 
 
 def print_description(page: AbstractPage) -> None:
-    print("{0} ({1}): {2}".format(page.page_name(), page.page_type(), page.description()))
+    page_type = page.page_type()
+    if page_type:
+        print("{0} ({1}): {2}".format(page.page_name(), page_type, page.description()))
+    else:
+        print("{0}: {1}".format(page.page_name(), page.description()))
 
 
 def answer_wat():

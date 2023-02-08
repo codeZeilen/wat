@@ -79,7 +79,7 @@ def test_no_page():
     Does it produce the correct page for a tldr page?
     """
     result = execute_shell_command('wat no_such_page')
-    assert "no description found" in result.stdout
+    assert "no_such_page: no description found" in result.stdout
 
 
 def test_runas_module():
