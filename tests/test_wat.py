@@ -1,4 +1,3 @@
-import os
 from wat import wat
 
 
@@ -18,20 +17,20 @@ def test_lookup_path_results_in_fs_page():
     assert type(page).__name__ == "FSPathPage"
 
 
-def test_lookup_service_results_in_systemctl_page():
+def test_lookup_service_results_in_combined_page():
     """
-    Does it produce the correct page for a service?
+    Many services are documented by tldr, which provides better descriptions.
     """
     page = wat.lookup_page("systemd-sysctl")
-    assert type(page).__name__ == "SystemCtlPage"
+    assert type(page).__name__ == "CombinedPage"
 
 
-def test_lookup_builtin_results_in_bash_page():
+def test_lookup_builtin_results_in_combined_page():
     """
-    Does it produce the correct page for a bash builtin?
+    Bash builtins are mostly documented by tldr, which provides better descriptions.
     """
     page = wat.lookup_page("echo")
-    assert type(page).__name__ == "BashHelpPage"
+    assert type(page).__name__ == "CombinedPage"
 
 
 def test_lookup_tldr_page():
@@ -40,5 +39,3 @@ def test_lookup_tldr_page():
     """
     page = wat.lookup_page("cut")
     assert type(page).__name__ == "TLDRPage"
-
-

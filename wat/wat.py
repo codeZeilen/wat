@@ -4,6 +4,8 @@ from typing import List
 
 from argparse import ArgumentParser
 
+from wat.pagesources import CombinedPage
+
 from .pagesources import NoPage, AbstractPage, BashHelpPage, FSPathPage, \
     WhatIsPage, TLDRPage, SystemCtlPage
 from . import __version__
@@ -30,18 +32,31 @@ def parse_arguments() -> List[str]:
 
 
 def lookup_page(name: str) -> 'AbstractPage':
+    result_pages = []
+    # The following ordering constitutes a priotization of 
+    # the different page sources
     if FSPathPage.has_page(name):
-        return FSPathPage.get_page(name)
-    elif BashHelpPage.has_page(name):
-        return BashHelpPage.get_page(name)
-    elif SystemCtlPage.has_page(name):
-        return SystemCtlPage.get_page(name)
-    elif TLDRPage.has_page(name):
-        return TLDRPage.get_page(name)
-    elif WhatIsPage.has_page(name):
-        return WhatIsPage.get_page(name)
-    else:
-        return NoPage()
+        result_pages.append(FSPathPage.get_page(name))
+    if BashHelpPage.has_page(name):
+        result_pages.append(BashHelpPage.get_page(name))
+    if SystemCtlPage.has_page(name):
+        result_pages.append(SystemCtlPage.get_page(name))
+    if WhatIsPage.has_page(name):
+        result_pages.append(WhatIsPage.get_page(name))
+    if TLDRPage.has_page(name):
+        result_pages.append(TLDRPage.get_page(name))
+    
+    result_page = NoPage()
+    if len(result_pages) > 1:
+        # We use the most specific type with the most extensive description
+        if result_pages[0].page_type() == result_pages[-1].page_type():
+            result_page = result_pages[-1]
+        else:
+            result_page = CombinedPage(result_pages[0], result_pages[-1])
+    elif (len(result_pages) == 1):
+        result_page = result_pages[0]
+    
+    return result_page
 
 
 def print_description(page: AbstractPage) -> None:
