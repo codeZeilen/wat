@@ -1,8 +1,37 @@
-from typing import List
 from .AbstractPage import AbstractPage
 from .NoPage import NoPage
-
+from typing import List, Optional, Union
 import tldr
+
+
+def get_page(
+    command: str,
+    remote: Optional[str] = None,
+    platforms: Optional[List[str]] = None,
+    languages: Optional[List[str]] = None
+) -> Union[str, bool]:
+    if platforms is None:
+        platforms = tldr.get_platform_list()
+    if languages is None:
+        languages = tldr.get_language_list()
+    # really only use cache
+    for platform in platforms:
+        for language in languages:
+            if platform is None:
+                continue
+            try:
+                return tldr.get_page_for_platform(
+                    command,
+                    platform,
+                    remote,
+                    language,
+                    only_use_cache=True,
+                )
+            except tldr.CacheNotExist:
+                continue
+    return False
+
+tldr.get_page = get_page
 
 
 class TLDRPage(AbstractPage):
