@@ -20,6 +20,11 @@ class AbstractPage(object):
     def description(self) -> str:
         pass
 
+    @classmethod
+    @abstractmethod
+    def update_page_source(cls):
+        pass
+
     @abstractmethod
     def page_type(self) -> str:
         return ""

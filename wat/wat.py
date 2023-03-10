@@ -19,6 +19,7 @@ def create_parser() -> ArgumentParser:
         help="name of the thing to lookup", metavar='nameOfThis'
     )
     parser.add_argument('--version', action='version', version=__version__)
+    parser.add_argument('--update', '-u', action='store_true')
     parser.add_argument('--ignore-empty-result', action='store_true')
     return parser
 
@@ -26,7 +27,7 @@ def create_parser() -> ArgumentParser:
 def parse_arguments() -> 'Namespace':
     parser = create_parser()
     arguments = parser.parse_args()
-    if not arguments.name_of_this:
+    if not arguments.name_of_this and not arguments.update:
         parser.print_help()
     return arguments
 
@@ -69,8 +70,16 @@ def print_description(page: AbstractPage, ignore_empty_page: bool=False) -> None
         print("{0}: {1}".format(page.page_name(), page.description()))
 
 
+def update_page_sources() -> None:
+    for page_source in [FSPathPage, BashHelpPage, SystemCtlPage, WhatIsPage, TLDRPage, PackageManagerPage]:
+        page_source.update_page_source()
+
+
 def answer_wat():
     arguments = parse_arguments()
+    if arguments.update:
+        update_page_sources()
+        raise SystemExit(0)
     for name in arguments.name_of_this:
         page = lookup_page(name)
         print_description(page, arguments.ignore_empty_result)

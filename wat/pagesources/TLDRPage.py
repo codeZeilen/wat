@@ -41,6 +41,10 @@ class TLDRPage(AbstractPage):
         self.content = content
 
     @classmethod
+    def update_page_source(cls):
+        tldr.update_cache()
+
+    @classmethod
     def get_page(cls, name: str) -> 'AbstractPage':
         content = tldr.get_page(name)
         if content is False:

@@ -12,8 +12,8 @@ SYSTEMCTL_AVAILABLE = shell('systemctl').exit_code == 0
 
 
 def setup_module(module):
-    "Ensure tldr pages are up to date"
-    shell('tldr --update')
+    "Ensure pages are up to date"
+    shell('wat --update')
 
 
 def execute_shell_command(command):
@@ -128,4 +128,14 @@ def test_version():
     result = execute_shell_command('wat --version')
 
     assert result.stdout == f"{expected_version}{linesep}"
+    assert result.exit_code == 0
+
+
+def test_update():
+    """
+    Does --update at least produce plausible output?
+    """
+    result = execute_shell_command('wat --update')
+
+    assert 'usage:' not in result.stdout
     assert result.exit_code == 0

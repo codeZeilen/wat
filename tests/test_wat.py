@@ -1,4 +1,6 @@
 from wat import wat
+from wat.pagesources import TLDRPage
+import mock
 
 
 def test_lookup_name_fs_page():
@@ -47,3 +49,12 @@ def test_lookup_package_manager_page():
     """
     page = wat.lookup_page("zeitgeist")
     assert type(page).__name__ == "PackageManagerPage"
+
+
+def test_update_page_sources():
+    """
+    Update the page sources.
+    """
+    with mock.patch.object(TLDRPage, 'update_page_source') as mock_update:
+        wat.update_page_sources()
+        mock_update.assert_called_once_with()
