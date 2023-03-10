@@ -37,5 +37,13 @@ def test_lookup_tldr_page():
     """
     Does it produce the correct page for a tldr page?
     """
-    page = wat.lookup_page("sed")
+    page = wat.lookup_page("ac")
     assert type(page).__name__ == "TLDRPage"
+
+
+def test_lookup_package_manager_page():
+    """
+    Does it produce the correct page for a package?
+    """
+    page = wat.lookup_page("zeitgeist")
+    assert type(page).__name__ == "PackageManagerPage"

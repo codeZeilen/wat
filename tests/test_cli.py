@@ -69,9 +69,9 @@ def test_tldr_page():
     """
     Does it produce the correct page for a tldr page?
     """
-    result = execute_shell_command('wat sed')
-    assert "Edit text in a scriptable manner." in result.stdout
-    assert "sed (program)" in result.stdout
+    result = execute_shell_command('wat ac')
+    assert "Print statistics on how long users have been connected." in result.stdout
+    assert "ac (program)" in result.stdout
 
 
 def test_no_page():

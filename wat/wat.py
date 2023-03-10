@@ -7,7 +7,7 @@ from argparse import ArgumentParser, Namespace
 from wat.pagesources import CombinedPage
 
 from .pagesources import NoPage, AbstractPage, BashHelpPage, FSPathPage, \
-    WhatIsPage, TLDRPage, SystemCtlPage
+    WhatIsPage, TLDRPage, SystemCtlPage, PackageManagerPage
 from . import __version__
 
 
@@ -45,6 +45,8 @@ def lookup_page(name: str) -> 'AbstractPage':
         result_pages.append(WhatIsPage.get_page(name))
     if TLDRPage.has_page(name):
         result_pages.append(TLDRPage.get_page(name))
+    if PackageManagerPage.has_page(name):
+        result_pages.append(PackageManagerPage.get_page(name))
     
     result_page = NoPage(name)
     if len(result_pages) > 1:
