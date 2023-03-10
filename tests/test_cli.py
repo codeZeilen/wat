@@ -31,9 +31,9 @@ def test_bash_built_in_page():
     """
     Does it produce the correct page for a bash builtin?
     """
-    result = execute_shell_command('wat echo')
-    assert 'Print given arguments.' in result.stdout
-    assert 'echo (builtin)' in result.stdout
+    result = execute_shell_command('wat until')
+    assert 'Execute commands as long as a test does not succeed.' in result.stdout
+    assert 'until (builtin)' in result.stdout
 
 
 def test_fs_page():
@@ -69,9 +69,9 @@ def test_tldr_page():
     """
     Does it produce the correct page for a tldr page?
     """
-    result = execute_shell_command('wat cut')
-    assert "Cut out fields from `stdin` or files." in result.stdout
-    assert "cut (program)" in result.stdout
+    result = execute_shell_command('wat sed')
+    assert "Edit text in a scriptable manner." in result.stdout
+    assert "sed (program)" in result.stdout
 
 
 def test_no_page():
@@ -80,6 +80,14 @@ def test_no_page():
     """
     result = execute_shell_command('wat no_such_page')
     assert "no_such_page: no description found" in result.stdout
+
+
+def test_no_page_ignore_empty():
+    """
+    Does it produce empty output when no page is found and --ignore-empty-result is set?
+    """
+    result = execute_shell_command('wat --ignore-empty-result no_such_page')
+    assert len(result.stdout) == 0
 
 
 def test_runas_module():

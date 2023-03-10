@@ -2,7 +2,7 @@
 
 from typing import List
 
-from argparse import ArgumentParser
+from argparse import ArgumentParser, Namespace
 
 from wat.pagesources import CombinedPage
 
@@ -19,16 +19,16 @@ def create_parser() -> ArgumentParser:
         help="name of the thing to lookup", metavar='nameOfThis'
     )
     parser.add_argument('--version', action='version', version=__version__)
-
+    parser.add_argument('--ignore-empty-result', action='store_true')
     return parser
 
 
-def parse_arguments() -> List[str]:
+def parse_arguments() -> 'Namespace':
     parser = create_parser()
     arguments = parser.parse_args()
     if not arguments.name_of_this:
         parser.print_help()
-    return arguments.name_of_this
+    return arguments
 
 
 def lookup_page(name: str) -> 'AbstractPage':
@@ -59,16 +59,16 @@ def lookup_page(name: str) -> 'AbstractPage':
     return result_page
 
 
-def print_description(page: AbstractPage) -> None:
+def print_description(page: AbstractPage, ignore_empty_page: bool=False) -> None:
     page_type = page.page_type()
     if page_type:
         print("{0} ({1}): {2}".format(page.page_name(), page_type, page.description()))
-    else:
+    elif not ignore_empty_page:
         print("{0}: {1}".format(page.page_name(), page.description()))
 
 
 def answer_wat():
-    requested_names = parse_arguments()
-    for name in requested_names:
+    arguments = parse_arguments()
+    for name in arguments.name_of_this:
         page = lookup_page(name)
-        print_description(page)
+        print_description(page, arguments.ignore_empty_result)

@@ -37,5 +37,5 @@ def test_lookup_tldr_page():
     """
     Does it produce the correct page for a tldr page?
     """
-    page = wat.lookup_page("cut")
+    page = wat.lookup_page("sed")
     assert type(page).__name__ == "TLDRPage"
