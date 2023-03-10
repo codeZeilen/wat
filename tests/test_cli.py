@@ -11,6 +11,11 @@ from cli_test_helpers import shell, EnvironContext
 SYSTEMCTL_AVAILABLE = shell('systemctl').exit_code == 0
 
 
+def setup_module(module):
+    "Ensure tldr pages are up to date"
+    shell('tldr --update')
+
+
 def execute_shell_command(command):
     with EnvironContext(LANG='en_EN'):
         return shell(command)
