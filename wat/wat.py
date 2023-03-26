@@ -10,6 +10,9 @@ from .pagesources import NoPage, AbstractPage, BashHelpPage, FSPathPage, \
     WhatIsPage, TLDRPage, SystemCtlPage, PackageManagerPage
 from . import __version__
 
+# The following ordering constitutes a priotization of pages sources
+# from general to specific.
+PAGE_SOURCES = [FSPathPage, BashHelpPage, SystemCtlPage, WhatIsPage, TLDRPage, PackageManagerPage]
 
 def create_parser() -> ArgumentParser:
     parser = ArgumentParser(prog="wat")
@@ -34,21 +37,15 @@ def parse_arguments() -> 'Namespace':
 
 def lookup_page(name: str) -> 'AbstractPage':
     result_pages = []
-    # The following ordering constitutes a priotization of 
-    # the different page sources
-    for page_source in [FSPathPage, BashHelpPage, SystemCtlPage, WhatIsPage, TLDRPage, PackageManagerPage]:
+    for page_source in PAGE_SOURCES:
         try:
             result_pages.append(page_source.get_page(name))
         except KeyError:
             pass
-    
+
     result_page = NoPage(name)
     if len(result_pages) > 1:
-        # We use the most specific type with the most extensive description
-        if result_pages[0].page_type() == result_pages[-1].page_type():
-            result_page = result_pages[-1]
-        else:
-            result_page = CombinedPage(result_pages[0], result_pages[-1])
+        result_page = CombinedPage(result_pages)
     elif (len(result_pages) == 1):
         result_page = result_pages[0]
     

@@ -4,20 +4,22 @@ from . import AbstractPage
 
 class CombinedPage(AbstractPage):
 
-    def __init__(self, type_page, description_page) -> None:
-        self.type_page: AbstractPage = type_page
-        self.description_page: AbstractPage = description_page
+    def __init__(self, pages) -> None:
+        self.pages = pages
 
     @classmethod
     def get_page(cls, name: str):
         return False
 
     def description(self) -> str:
-        return self.description_page.description()
+        description = ""
+        for page in self.pages:
+            description += "\n - ({}) {}".format(page.page_type(), page.description())
+        return description
 
     @abstractmethod
     def page_type(self) -> str:
-        return self.type_page.page_type()
+        return "list"
 
     def page_name(self) -> str:
-        return self.type_page.page_name()
+        return self.pages[0].page_name()
