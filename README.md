@@ -31,6 +31,21 @@ and makes the relevant information available to other applications.
 1. Install requirements: `pip install -r requirements.txt`
 2. Install `wat` as command line tools: `python3 setup.py install --user`
 
+## Usage
+
+```
+usage: wat [-h] [--version] [--update] [--skip-empty-result] [name ...]
+
+positional arguments:
+  name                 name of the thing to lookup
+
+options:
+  -h, --help           show this help message and exit
+  --version            show program's version number and exit
+  --update, -u         update the page sources
+  --skip-empty-result  if there is no result, don't print anything
+```
+
 ## Acknowledgments!
 
 The inital repository structure is based on [navdeep-G/samplemod](https://github.com/navdeep-G/samplemod).
