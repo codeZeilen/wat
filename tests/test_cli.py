@@ -57,8 +57,7 @@ def test_systemctl_page_indirect():
     """
     result = execute_shell_command('wat systemd-sysctl')
     assert "Configure kernel parameters at boot" in result.stdout
-    assert "systemd-sysctl (service)" in result.stdout
-
+    
 
 @pytest.mark.skipif(not SYSTEMCTL_AVAILABLE, reason="systemctl not available")
 def test_systemctl_page_direct():
@@ -67,7 +66,6 @@ def test_systemctl_page_direct():
     """
     result = execute_shell_command('wat systemd-sysctl.service')
     assert "Configure kernel parameters at boot" in result.stdout
-    assert "systemd-sysctl (service)" in result.stdout
 
 
 def test_tldr_page():

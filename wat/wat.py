@@ -12,7 +12,8 @@ from . import __version__
 
 # The following ordering constitutes a priotization of pages sources
 # from general to specific.
-PAGE_SOURCES = [FSPathPage, BashHelpPage, SystemCtlPage, WhatIsPage, TLDRPage, PackageManagerPage]
+PAGE_SOURCES = [FSPathPage, BashHelpPage, SystemCtlPage, PackageManagerPage, WhatIsPage, TLDRPage]
+
 
 def create_parser() -> ArgumentParser:
     parser = ArgumentParser(prog="wat")
