@@ -39,6 +39,9 @@ class SystemCtlPage(AbstractPage):
 
     @classmethod
     def get_page(cls, name: str) -> 'SystemCtlPage':
+        if not SYSTEMCTL_AVAILABLE:
+            cls.raiseKeyError(name)
+            
         process = cls.run_systemctl(name)
         if cls.process_successfully_returned(process):
             return cls(name,
@@ -49,7 +52,7 @@ class SystemCtlPage(AbstractPage):
             return cls(name + ".service",
                        cls.extract_description(process.stdout))
 
-        raise NameError(name)
+        cls.raiseKeyError(name)
 
     def description(self, detailed=False) -> str:
         return self.content

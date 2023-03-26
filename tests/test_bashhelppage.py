@@ -1,15 +1,6 @@
 from wat.pagesources import BashHelpPage
 
 #
-# Has Page
-#
-
-
-def test_has_page_for_builtin():
-    assert BashHelpPage.has_page("echo")
-
-
-#
 # Get Page
 #
 

@@ -22,14 +22,6 @@ class FSPathPage(AbstractPage):
         return ""
 
     @classmethod
-    def has_page(cls, path) -> bool:
-        try:
-            cls.get_page(path)
-            return True
-        except KeyError:
-            return False
-
-    @classmethod
     def get_page(cls, path) -> 'FSPathPage':
         absolute_path = pathlib.Path(path).absolute()
         page_content = None
@@ -45,7 +37,7 @@ class FSPathPage(AbstractPage):
             page_content = cls.content_from_pattern(absolute_path)
             if page_content:
                 return cls(absolute_path, page_content)
-        raise KeyError("No page found for path: {}".format(path))
+        cls.raiseKeyError(path)
 
     @classmethod
     def initialize_pages(cls) -> None:

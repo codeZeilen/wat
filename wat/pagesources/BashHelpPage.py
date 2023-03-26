@@ -14,13 +14,10 @@ class BashHelpPage(AbstractPage):
         return subprocess.run(["/bin/bash", "-c", 'help -d {name}'.format(name=name)], capture_output=True)
 
     @classmethod
-    def has_page(cls, name: str) -> bool:
-        process = cls.run_help(name)
-        return process.returncode == 0
-
-    @classmethod
     def get_page(cls, name: str) -> 'BashHelpPage':
         process = cls.run_help(name)
+        if process.returncode != 0:
+            cls.raiseKeyError(name)
         return cls(name, str(process.stdout))
 
     def description(self, detailed = False) -> str:

@@ -8,11 +8,6 @@ class AbstractPage(object):
 
     @classmethod
     @abstractmethod
-    def has_page(cls, name: str) -> bool:
-        pass
-
-    @classmethod
-    @abstractmethod
     def get_page(cls, name: str):
         pass
 
@@ -24,6 +19,10 @@ class AbstractPage(object):
     @abstractmethod
     def update_page_source(cls):
         pass
+
+    @classmethod
+    def raiseKeyError(cls, name: str):
+        raise KeyError("No page found for name: {}".format(name))
 
     @abstractmethod
     def page_type(self) -> str:

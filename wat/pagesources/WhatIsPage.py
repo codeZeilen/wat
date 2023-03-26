@@ -15,13 +15,10 @@ class WhatIsPage(AbstractPage):
         return subprocess.run(["whatis", name], capture_output=True)
 
     @classmethod
-    def has_page(cls, name: str) -> bool:
-        process = cls.run_whatis(name)
-        return process.returncode == 0
-
-    @classmethod
     def get_page(cls, name: str) -> 'WhatIsPage':
         process = cls.run_whatis(name)
+        if process.returncode != 0:
+            cls.raiseKeyError(name)
         description = process.stdout.decode('utf-8')
         description = description.split(" - ")[1].strip()
         return cls(name, description)

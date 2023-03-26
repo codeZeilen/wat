@@ -9,10 +9,6 @@ class CombinedPage(AbstractPage):
         self.description_page: AbstractPage = description_page
 
     @classmethod
-    def has_page(cls, name: str) -> bool:
-        return False
-
-    @classmethod
     def get_page(cls, name: str):
         return False
 

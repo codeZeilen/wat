@@ -36,18 +36,11 @@ def lookup_page(name: str) -> 'AbstractPage':
     result_pages = []
     # The following ordering constitutes a priotization of 
     # the different page sources
-    if FSPathPage.has_page(name):
-        result_pages.append(FSPathPage.get_page(name))
-    if BashHelpPage.has_page(name):
-        result_pages.append(BashHelpPage.get_page(name))
-    if SystemCtlPage.has_page(name):
-        result_pages.append(SystemCtlPage.get_page(name))
-    if WhatIsPage.has_page(name):
-        result_pages.append(WhatIsPage.get_page(name))
-    if TLDRPage.has_page(name):
-        result_pages.append(TLDRPage.get_page(name))
-    if PackageManagerPage.has_page(name):
-        result_pages.append(PackageManagerPage.get_page(name))
+    for page_source in [FSPathPage, BashHelpPage, SystemCtlPage, WhatIsPage, TLDRPage, PackageManagerPage]:
+        try:
+            result_pages.append(page_source.get_page(name))
+        except KeyError:
+            pass
     
     result_page = NoPage(name)
     if len(result_pages) > 1:

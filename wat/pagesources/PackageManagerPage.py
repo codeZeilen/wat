@@ -39,6 +39,8 @@ class PackageManagerPage(AbstractPage):
     @classmethod
     def get_page(cls, name: str) -> 'PackageManagerPage':
         process = cls.run_package_manager(name)
+        if process.returncode != 0:
+            cls.raiseKeyError(name)
         description = cls.find_description(process.stdout.decode('utf-8'))
         return cls(name, description)
 

@@ -48,12 +48,8 @@ class TLDRPage(AbstractPage):
     def get_page(cls, name: str) -> 'AbstractPage':
         content = tldr.get_page(name)
         if content is False:
-            return NoPage()
+            cls.raiseKeyError(name)
         return cls(name, content)       
-
-    @classmethod
-    def has_page(cls, name: str) -> bool:
-        return tldr.get_page(name) is not False
 
     def description(self, detailed=False) -> str:
         description = ""
