@@ -9,6 +9,12 @@ with open('README.md') as f:
 with open('LICENSE.md') as f:
     license = f.read()
 
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
+
+with open('tests/requirements.txt') as f:
+    tests_required = f.read().splitlines()
+
 setup(
     name='wat',
     version='0.1.0',
@@ -17,6 +23,8 @@ setup(
     author='Patrick Rein',
     author_email='hi@patrickrein.de',
     url='https://github.com/codezeilen/wat',
+    install_requires=required,
+    tests_require=tests_required,
     license=license,
     classifiers=[
         'Development Status :: 3 - Alpha',
