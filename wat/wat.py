@@ -16,11 +16,11 @@ def create_parser() -> ArgumentParser:
  
     parser.add_argument(
         'name_of_this', type=str, nargs='*', 
-        help="name of the thing to lookup", metavar='nameOfThis'
+        help="name of the thing to lookup", metavar='name'
     )
     parser.add_argument('--version', action='version', version=__version__)
-    parser.add_argument('--update', '-u', action='store_true')
-    parser.add_argument('--ignore-empty-result', action='store_true')
+    parser.add_argument('--update', '-u', action='store_true', help="update the page sources")
+    parser.add_argument('--skip-empty-result', action='store_true', help="if there is no result, don't print anything")
     return parser
 
 
@@ -62,11 +62,11 @@ def lookup_page(name: str) -> 'AbstractPage':
     return result_page
 
 
-def print_description(page: AbstractPage, ignore_empty_page: bool=False) -> None:
+def print_description(page: AbstractPage, skip_empty_result: bool=False) -> None:
     page_type = page.page_type()
     if page_type:
         print("{0} ({1}): {2}".format(page.page_name(), page_type, page.description()))
-    elif not ignore_empty_page:
+    elif not skip_empty_result:
         print("{0}: {1}".format(page.page_name(), page.description()))
 
 
@@ -82,4 +82,4 @@ def answer_wat():
         raise SystemExit(0)
     for name in arguments.name_of_this:
         page = lookup_page(name)
-        print_description(page, arguments.ignore_empty_result)
+        print_description(page, arguments.skip_empty_result)
