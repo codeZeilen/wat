@@ -24,12 +24,13 @@ and makes the relevant information available to other applications.
 
 ## Installation
 
-`wat` requires Python 3.10.
+`wat` requires Python 3.10. 
+`wat` runs on most Linux distributions and can be used with MacOS, however with a limited feature set for now.
 
 ### From repository
 
 1. Install requirements: `pip install -r requirements.txt`
-2. Install `wat` as command line tools: `python3 setup.py install --user`
+2. Install `wat` as command line tools: `python3 setup.py install`
 
 ## Usage
 
