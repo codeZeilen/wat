@@ -1,0 +1,76 @@
+{
+    "/": {
+        "bin": {
+            "value": "bin.md"
+        },
+        "boot": {
+            "value": "boot.md"
+        },
+        "dev": {
+            "value": "dev.md"
+        },
+        "etc": {
+            "value": "etc.md",
+            "hosts": {
+                "value": "etc-hosts.md"
+            },
+            "sudoers": {
+                "value": "etc-sudoers.md"
+            }
+        },
+        "home": {
+            "value": "home.md",
+            "globs": {
+                "*": {
+                    ".bashrc": {
+                        "value": "home-glob-.bashrc.md"
+                    }
+                }
+            }
+        },
+        "lib": {
+            "value": "lib.md"
+        },
+        "media": {
+            "value": "media.md"
+        },
+        "mnt": {
+            "value": "mnt.md"
+        },
+        "opt": {
+            "value": "opt.md"
+        },
+        "proc": {
+            "value": "proc.md"
+        },
+        "root": {
+            "value": "root.md"
+        },
+        "run": {
+            "value": "run.md"
+        },
+        "sbin": {
+            "value": "sbin.md"
+        },
+        "srv": {
+            "value": "srv.md"
+        },
+        "sys": {
+            "value": "sys.md"
+        },
+        "tmp": {
+            "value": "tmp.md"
+        },
+        "usr": {
+            "value": "usr.md"
+        },
+        "var": {
+            "value": "var.md"
+        }
+    },
+    "**": {
+        ".gitignore": {
+            "value": ".gitignore.md"
+        }
+    }
+}
