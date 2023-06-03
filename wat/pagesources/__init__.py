@@ -7,3 +7,6 @@ from .NoPage import NoPage
 from .SystemCtlPage import SystemCtlPage
 from .CombinedPage import CombinedPage
 from .PackageManagerPage import PackageManagerPage
+
+from .FSPathPage import GlobTrie
+from . import FileCache
