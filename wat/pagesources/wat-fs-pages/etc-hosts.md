@@ -1,5 +1,5 @@
 ---
-license: root directory descriptions originally created by contributors to the Ubuntu documentation wiki and based on https://help.ubuntu.com/community/LinuxFilesystemTreeOverview.
+license: based on the corresponding Wikipedia entry
 path: /etc/hosts
 ---
 

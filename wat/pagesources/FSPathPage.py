@@ -28,10 +28,15 @@ class FSPathPage(AbstractPage):
         if not page_file_name:
             cls.raiseKeyError(path)
 
-        with FileCache.page_file('fs_pages', page_file_name) as f:
-            page_content = f.read()
+        page_content = cls.get_page_content(page_file_name)
 
         return cls(absolute_path, page_content)
+
+    @classmethod
+    def get_page_content(cls, page_file_name):
+        with FileCache.page_file('fs_pages', page_file_name) as f:
+            page_content = f.read()
+        return page_content.split("---")[-1].strip()
 
     @classmethod
     def try_absolute_path(cls, absolute_path) -> Optional[str]:

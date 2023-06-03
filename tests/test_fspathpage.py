@@ -18,7 +18,7 @@ class TestFSPathPage(unittest.TestCase):
     def test_get_page_for_absolute_path_directory(self):
         page = FSPathPage.get_page("/bin")
         self.assertTrue(page.path.as_posix() == "/bin")
-        self.assertTrue("/bin is a place for most commonly" in page.description())
+        self.assertTrue(page.description().startswith("/bin is a place for most commonly"))
 
     def test_get_page_for_absolute_path_file(self):
         page = FSPathPage.get_page("/etc/hosts")
