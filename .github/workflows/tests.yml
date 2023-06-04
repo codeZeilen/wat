@@ -1,9 +1,6 @@
 name: wat client Python package
 
-on:
-  push:
-    paths:
-      - wat-client/**
+on: [push]
 
 jobs:
   build:
