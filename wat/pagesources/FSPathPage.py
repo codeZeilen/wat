@@ -7,7 +7,7 @@ from .GlobTrie import GlobTrie
 
 DOWNLOAD_CACHE_URL = os.environ.get(
     'WAT_FSPATH_PAGES_DOWNLOAD_CACHE_URL',
-    'https://wat-pages.github.io/assets/wat-fspath-pages.zip'
+    'github.com/codeZeilen/wat-pages/releases/latest/download/fs-path-pages.zip'
 )
 FSPATH_PAGES_CACHE = FileCache.FileCache('fs_pages', DOWNLOAD_CACHE_URL)
 
