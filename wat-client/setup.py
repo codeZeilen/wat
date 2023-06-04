@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 # Based on: https://github.com/kennethreitz/setup.py
 
-from setuptools import setup, find_packages
+from setuptools import setup
 
-with open('README.md') as f:
+with open('../README.md') as f:
     readme = f.read()
 
-with open('LICENSE.md') as f:
+with open('../LICENSE.md') as f:
     license = f.read()
 
 with open('requirements.txt') as f:
