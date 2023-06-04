@@ -4,6 +4,7 @@ Based on https://github.com/painless-software/python-cli-test-helpers/tree/main/
 """
 from importlib.metadata import version
 from os import linesep
+from pathlib import Path
 import pytest
 
 from cli_test_helpers import shell, EnvironContext
@@ -17,7 +18,11 @@ def setup_module(module):
 
 
 def execute_shell_command(command):
-    with EnvironContext(LANG='en_EN'):
+    cache_fixture_location = (Path(__file__).parent / 'fixture-fs-pages.zip').absolute().as_posix()
+    cache_fixture_url = 'file://' + cache_fixture_location
+    with EnvironContext(
+      LANG='en_EN',
+      WAT_FSPATH_PAGES_DOWNLOAD_CACHE_URL=cache_fixture_url):
         return shell(command)
 
 

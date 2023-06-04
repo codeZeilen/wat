@@ -1,11 +1,16 @@
 from typing import Dict, Optional
 from .AbstractPage import AbstractPage
+import os
 import json
 import pathlib
 import fnmatch
 from . import FileCache
 
-cache = FileCache.FileCache('fs_pages', 'not specified yet')
+DOWNLOAD_CACHE_URL = os.environ.get(
+    'WAT_FSPATH_PAGES_DOWNLOAD_CACHE_URL',
+    'https://wat-pages.github.io/assets/wat-fspath-pages.zip'
+)
+FSPATH_PAGES_CACHE = FileCache.FileCache('fs_pages', DOWNLOAD_CACHE_URL)
 
 
 class FSPathPage(AbstractPage):
@@ -36,7 +41,7 @@ class FSPathPage(AbstractPage):
 
     @classmethod
     def get_page_content(cls, page_file_name):
-        with cache.page_file(page_file_name) as f:
+        with FSPATH_PAGES_CACHE.page_file(page_file_name) as f:
             page_content = f.read()
         return page_content.split("---")[-1].strip()
 
@@ -57,7 +62,7 @@ class FSPathPage(AbstractPage):
 
     @classmethod
     def initialize_pages(cls) -> None:
-        with cache.index_file() as f:
+        with FSPATH_PAGES_CACHE.index_file() as f:
             cls.pages = GlobTrie.load(f)
 
     @classmethod

@@ -1,6 +1,11 @@
+from io import BytesIO
 import os
 import pathlib
 import sys
+from zipfile import ZipFile
+from urllib.request import urlopen, Request
+
+REQUEST_HEADERS = {'User-Agent': 'wat-python-client'}
 
 
 class FileCache(object):
@@ -10,12 +15,27 @@ class FileCache(object):
         self.archive_location: str = archive_location
 
     def index_file(self):
+        self.ensure_cache_dir_exists()
         index_path = self.base_dir_path() / 'index.json'
         return open(index_path, 'r')
 
     def page_file(self, file_name):
+        self.ensure_cache_dir_exists()
         file_path = self.base_dir_path() / file_name
         return open(file_path, 'r')
+
+    def ensure_cache_dir_exists(self):
+        if not self.base_dir_path().exists():
+            self.base_dir_path().mkdir(parents=True)
+            self.update_cache()
+
+    def update_cache(self):
+        req = urlopen(Request(
+            self.archive_location,
+            headers=REQUEST_HEADERS
+        ))
+        zipfile = ZipFile(BytesIO(req.read()))
+        zipfile.extractall(path=str(self.base_dir_path()))
 
     def base_dir_path(self) -> 'pathlib.Path':
         return self.cache_dir_path() / self.collection_name
