@@ -4,10 +4,8 @@ from typing import List
 
 from argparse import ArgumentParser, Namespace
 
-from wat.pagesources import CombinedPage
+from wat.pagesources import CombinedPage, NoPage, AbstractPage, BashHelpPage, FSPathPage, WhatIsPage, TLDRPage, SystemCtlPage, PackageManagerPage
 
-from .pagesources import NoPage, AbstractPage, BashHelpPage, FSPathPage, \
-    WhatIsPage, TLDRPage, SystemCtlPage, PackageManagerPage
 from . import __version__
 
 # The following ordering constitutes a priotization of pages sources
