@@ -14,7 +14,7 @@ class TestFSPathPage(TestCase):
 
     def setUp(self) -> None:
         super().setUp()
-        FileCache.cache_dir_path = lambda: pathlib.Path('/home/someUser/.cache/wat')
+        FileCache.FileCache.cache_dir_path = lambda self: pathlib.Path('/home/someUser/.cache/wat')
         FSPathPage.reset_pages()
         FSPathPage.initialize_pages()
 

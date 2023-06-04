@@ -5,6 +5,8 @@ import pathlib
 import fnmatch
 from . import FileCache
 
+cache = FileCache.FileCache('fs_pages', 'not specified yet')
+
 
 class FSPathPage(AbstractPage):
 
@@ -34,7 +36,7 @@ class FSPathPage(AbstractPage):
 
     @classmethod
     def get_page_content(cls, page_file_name):
-        with FileCache.page_file('fs_pages', page_file_name) as f:
+        with cache.page_file(page_file_name) as f:
             page_content = f.read()
         return page_content.split("---")[-1].strip()
 
@@ -55,7 +57,7 @@ class FSPathPage(AbstractPage):
 
     @classmethod
     def initialize_pages(cls) -> None:
-        with FileCache.index_file('fs_pages') as f:
+        with cache.index_file() as f:
             cls.pages = GlobTrie.load(f)
 
     @classmethod
