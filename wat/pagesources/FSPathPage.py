@@ -53,7 +53,7 @@ class FSPathPage(AbstractPage):
 
     @classmethod
     def try_individual_files(cls, absolute_path) -> Optional[str]:
-        relative_path = '**/' + absolute_path.name
+        relative_path = './' + absolute_path.name
         try:
             return cls.all_pages().get(relative_path)
         except KeyError:
