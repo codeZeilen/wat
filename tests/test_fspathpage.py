@@ -31,13 +31,17 @@ class TestFSPathPage(TestCase):
         trie.add('/bin', 'bin.md')
         trie.add('/etc/hosts', 'etc-hosts.md')
         trie.add('/etc', 'etc.md')
+        trie.add('.gitignore', '.gitignore.md')
         bashrc_description = 'bashrc description'
+        gitignore_description = '.gitignore description'
 
         cls.fake_fs().create_file("/home/someUser/.bashrc", contents="test")
+        cls.fake_fs().create_file("/home/someUser/.gitignore", contents="test")
         cls.fake_fs().create_file("/etc/hosts", contents="test")
         cls.fake_fs().create_dir("/bin")
         cls.create_cached_fs_page("index.json", trie.store_string())
         cls.create_cached_fs_page('globbashrc.md', bashrc_description)
+        cls.create_cached_fs_page('.gitignore.md', gitignore_description)
         cls.create_cached_fs_page('bin.md', '---\n---\n\n/bin is a place for most commonly used programs')
         cls.create_cached_fs_page('etc.md', 'test')
         cls.create_cached_fs_page('etc-hosts.md', '/etc/hosts is a file that contains the IP addresses')
@@ -63,6 +67,13 @@ class TestFSPathPage(TestCase):
         page = FSPathPage.get_page(".bashrc")
         self.assertTrue(page.path.as_posix() == "/home/someUser/.bashrc")
         self.assertTrue(page.description() == 'bashrc description')
+
+    def test_get_page_for_relative_page_path(self):
+        os.chdir('/home/someUser')
+        page = FSPathPage.get_page(".gitignore")
+        self.assertTrue(page.path.as_posix() == "/home/someUser/.gitignore")
+        self.assertTrue(page.description() == '.gitignore description')
+
 
     #
     # Page Type
