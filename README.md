@@ -37,7 +37,7 @@ administrator); often data is deleted after it has been processed.
 ### From repository
 
 1. Install requirements: `pip install -r requirements.txt`
-2. Install `wat` as command line tools: `python3 setup.py install`
+2. Install `wat` as a command line tool: `python3 setup.py install`
 
 ## Usage
 
