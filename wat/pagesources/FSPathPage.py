@@ -82,5 +82,7 @@ class FSPathPage(AbstractPage):
     def page_name(self) -> str:
         return self.path.as_posix()
 
-    def update_page_source(self, page_source: str) -> None:
+    @classmethod
+    def update_page_source(cls) -> None:
         FSPATH_PAGES_CACHE.update_cache()
+        print("Updated pages for files and folders.")
