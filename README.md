@@ -12,6 +12,7 @@
  * packages
  * files and folders (based on [wat-pages](https://github.com/codeZeilen/wat-pages)) 
 
+
 To find out what something is, simply pass the name to `wat`:
 
 ```
@@ -23,7 +24,9 @@ and makes the relevant information available to other applications.
 
 > wat /var/spool
 
-This directory contains data which is awaiting some kind of later processing. Data in /var/spool represents work to be done in the future (by a program, user, or administrator); often data is deleted after it has been processed.
+/var/spool (directory): This directory contains data which is awaiting some kind of later processing. Data 
+in /var/spool represents work to be done in the future (by a program, user, or 
+administrator); often data is deleted after it has been processed.
 ```
 
 ## Installation
