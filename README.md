@@ -10,7 +10,7 @@
  * services
  * bash built-ins
  * packages
- * files and folders (experimental)
+ * files and folders (based on [wat-pages](https://github.com/codeZeilen/wat-pages)) 
 
 To find out what something is, simply pass the name to `wat`:
 
@@ -20,6 +20,10 @@ To find out what something is, simply pass the name to `wat`:
 zeitgeist (package): Zeitgeist is a service which logs the user's activities and 
 events (files opened, websites visited, conversations held with other people, etc.) 
 and makes the relevant information available to other applications.
+
+> wat /var/spool
+
+This directory contains data which is awaiting some kind of later processing. Data in /var/spool represents work to be done in the future (by a program, user, or administrator); often data is deleted after it has been processed.
 ```
 
 ## Installation
