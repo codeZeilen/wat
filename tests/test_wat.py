@@ -1,5 +1,5 @@
 from wat import wat
-from wat.pagesources import TLDRPage
+from wat.pagesources import TLDRPage, FSPathPage
 import mock
 import unittest
 
@@ -54,6 +54,8 @@ class WatTest(unittest.TestCase):
         """
         Update the page sources.
         """
-        with mock.patch.object(TLDRPage, 'update_page_source') as mock_update:
-            wat.update_page_sources()
-            mock_update.assert_called_once_with()
+        with mock.patch.object(TLDRPage, 'update_page_source') as mock_tldr_update:
+            with mock.patch.object(FSPathPage, 'update_page_source') as mock_fs_update:
+                wat.update_page_sources()
+                mock_tldr_update.assert_called_once_with()
+                mock_fs_update.assert_called_once_with()
