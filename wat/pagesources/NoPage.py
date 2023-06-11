@@ -11,4 +11,4 @@ class NoPage(AbstractPage):
         if not absolute_path.exists():
             return "no description found, consider filing an issue at https://github.com/codeZeilen/wat"
         else:
-            return "no description found, consider adding a page at https://github.com/codeZeilen/wat"
+            return "no description found, consider adding a page at https://github.com/codeZeilen/wat-pages"
