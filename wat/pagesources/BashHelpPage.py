@@ -18,7 +18,7 @@ class BashHelpPage(AbstractPage):
         process = cls.run_help(name)
         if process.returncode != 0:
             cls.raiseKeyError(name)
-        return cls(name, str(process.stdout))
+        return cls(name, process.stdout.decode("utf-8"))
 
     def description(self, detailed = False) -> str:
         return self.content
