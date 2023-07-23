@@ -127,7 +127,7 @@ def test_version():
     """
     Does --version display information as expected?
     """
-    expected_version = version('wat')
+    expected_version = version('wat-terminal')
     result = execute_shell_command('wat --version')
 
     assert result.stdout == f"{expected_version}{linesep}"
