@@ -21,7 +21,7 @@ setup(
     description='',
     long_description=readme,
     author='Patrick Rein',
-    author_email='hi@patrickrein.de',
+    author_email='support@patrickrein.de',
     url='https://github.com/codezeilen/wat',
     install_requires=required,
     tests_require=tests_required,
@@ -43,6 +43,5 @@ setup(
         ],
     },
     include_package_data=True,
-    package_data={"": ["*.json"]},
     packages=['wat', 'wat.pagesources']
 )
