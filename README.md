@@ -34,6 +34,10 @@ administrator); often data is deleted after it has been processed.
 `wat` requires Python 3.10. 
 `wat` runs on most Linux distributions and can be used with MacOS, however with a limited feature set for now.
 
+### From PyPi
+
+`pip3 install wat-terminal`
+
 ### From repository
 
 1. Install requirements: `pip install -r requirements.txt`

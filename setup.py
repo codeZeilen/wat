@@ -16,10 +16,11 @@ with open('tests/requirements.txt') as f:
     tests_required = f.read().splitlines()
 
 setup(
-    name='wat',
+    name='wat-terminal',
     version='0.1.0',
-    description='',
+    description='wat helps you find out what all the things in your Linux system are. You can ask it for information on: executables, services, bash built-ins, packages, files and folders',
     long_description=readme,
+    long_description_content_type="text/markdown",
     author='Patrick Rein',
     author_email='support@patrickrein.de',
     url='https://github.com/codezeilen/wat',
