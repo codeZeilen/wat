@@ -3,17 +3,13 @@ from typing import List, Optional, Union
 import tldr
 
 
-def get_page(
-    command: str,
-    remote: Optional[str] = None,
-    platforms: Optional[List[str]] = None,
-    languages: Optional[List[str]] = None
-) -> Union[str, bool]:
+# Copied from tldr.get_page, adjusted that only the cache should be used
+def get_page(command: str, remote: Optional[str] = None, platforms: Optional[List[str]] = None, languages: Optional[List[str]] = None) -> Union[str, bool]:
     if platforms is None:
         platforms = tldr.get_platform_list()
     if languages is None:
         languages = tldr.get_language_list()
-    # really only use cache
+    # really only use the cache
     for platform in platforms:
         for language in languages:
             if platform is None:
