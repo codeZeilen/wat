@@ -43,7 +43,7 @@ def test_bash_built_in_page():
     """
     result = execute_shell_command('wat until')
     assert 'Execute commands as long as a test does not succeed.' in result.stdout
-    assert 'until (builtin)' in result.stdout
+    assert '(builtin) until' in result.stdout
 
 
 def test_fs_page():
